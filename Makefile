@@ -7,5 +7,5 @@ INCLUDE=-I/opt/vc/include \
 # Also the minimum
 LDFLAGS=-L/opt/vc/lib -lGLESv2 -lEGL `pkg-config --libs sdl`
 
-main: src/main.c
-	$(CC) -o $(NAME) src/main.c $(INCLUDE) $(LDFLAGS)
+main: main.c
+	$(CC) -o $(NAME) main.c $(INCLUDE) $(LDFLAGS)
