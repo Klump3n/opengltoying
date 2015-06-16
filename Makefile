@@ -3,9 +3,10 @@ CC=gcc
 CFLAGS=I
 # This appears to be the absolute minimum to compile properly
 INCLUDE=-I/opt/vc/include \
-	`pkg-config --cflags sdl2`
+	-I/opt/vc/include/interface/vcos/pthreads \
+	-I/opt/vc/include/interface/vmcs_host/linux
 # Also the minimum
-LDFLAGS=-L/opt/vc/lib -lGLESv2 -lEGL `pkg-config --libs sdl2`
+LDFLAGS=-L/opt/vc/lib -lGLESv2 -lEGL -lbcm_host
 
 main: main.c
 	$(CC) -o $(NAME) main.c $(INCLUDE) $(LDFLAGS)
