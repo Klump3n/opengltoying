@@ -1,5 +1,7 @@
-out vec4 outColour;
+precision mediump float;
+
+uniform float time;
 
 void main(){
-  outColour = vec4(1.0, 1.0, 1.0, 1.0);
+  gl_FragColor = vec4 (1.0, 1.0, 1.0, 1.0 );
 }

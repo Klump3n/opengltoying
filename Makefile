@@ -9,4 +9,4 @@ INCLUDE=-I/opt/vc/include \
 LDFLAGS=-L/opt/vc/lib -lGLESv2 -lEGL -lbcm_host
 
 main: main.c
-	$(CC) -o $(NAME) main.c $(INCLUDE) $(LDFLAGS)
+	$(CC) -o $(NAME) shaderstuff.c initogl.c main.c $(INCLUDE) $(LDFLAGS)
