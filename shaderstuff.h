@@ -9,16 +9,19 @@
 
 #include "bcm_host.h"
 
+#ifndef STATE
+#define STATE
+#include "statetype.h"
+#endif
+
 #include "initogl.h"
 
-void showlog();
+void showlog(GLint shader);
 
-void showprogramlog();
+void showprogramlog(GLint shader);
 
-void load_vertex_shader();
+void load_vertex_shader(STATE_M *state, const char *filename);
 
-void load_fragment_shader();
+void load_fragment_shader(STATE_M *state, const char *filename);
 
-void get_shader_variables();
-
-void link_shaders();
+void link_shaders(STATE_M *state);

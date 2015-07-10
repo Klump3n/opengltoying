@@ -1,5 +1,10 @@
 #include "initogl.h"
+
+#ifndef STATE
+#define STATE
 #include "statetype.h"
+#endif
+
 
 #define check() assert(glGetError() == 0)
 
@@ -85,9 +90,9 @@ void init_opengl(STATE_M *state){
 
   // and i dont understand this either. the documentations if f'ed up
   dispman_element = vc_dispmanx_element_add ( dispman_update, dispman_display,
-					      0/*layer*/, &dst_rect, 0/*src*/,
+					      0/*layer*/, &dst_rect,  0/*src*/,
 					      &src_rect, DISPMANX_PROTECTION_NONE,
-					      0 /*alpha*/, 0/*clamp*/, 0/*transform*/);
+					      0 /*alpha*/,  0/*clamp*/,  (DISPMANX_TRANSFORM_T)0/*transform*/);
 
   // set dispmanx
   nativewindow.element = dispman_element;

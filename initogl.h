@@ -9,4 +9,9 @@
 
 #include "bcm_host.h"
 
-void init_opengl();
+#ifndef STATE
+#define STATE
+#include "statetype.h"
+#endif
+
+void init_opengl(STATE_M *state);

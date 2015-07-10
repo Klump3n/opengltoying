@@ -1,5 +1,8 @@
 #include "shaderstuff.h"
+#ifndef STATE
+#define STATE
 #include "statetype.h"
+#endif
 
 #define check() assert(glGetError() == 0)
 
@@ -21,7 +24,7 @@ void showprogramlog(GLint shader)
    printf("%d:program:\n%s\n", shader, log);
 };
 
-void load_vertex_shader(STATE_M *state, char *filename){
+void load_vertex_shader(STATE_M *state, const char *filename){
 
   // status variables
   GLint vsStatus = GL_FALSE;
@@ -67,7 +70,7 @@ void load_vertex_shader(STATE_M *state, char *filename){
   };
 };
 
-void load_fragment_shader(STATE_M *state, char *filename){
+void load_fragment_shader(STATE_M *state, const char *filename){
 
     // status variables
   GLint fsStatus = GL_FALSE;
