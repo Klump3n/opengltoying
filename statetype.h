@@ -17,9 +17,9 @@ typedef struct
   GLuint vshader;
   GLuint fshader;
   GLuint shaderProgram;
-  GLint posAttrib;
 
   // shader internal variables
-  time_t time;
+  GLuint posAttrib;
+  GLuint color;
   
 } STATE_M;

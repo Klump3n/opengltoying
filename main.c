@@ -22,12 +22,17 @@ static STATE_M *state=&_state;
 
 
 
-GLfloat vertices[] = {
-  -.9f, -.9f,
-  .9f, -.9f,
-  0.0f, .9f,
+GLfloat vertices2[] = {
+  -1.0f, -1.0f,
+  1.0f, -1.0f,
+  0.0f, 1.0f,
 };
 
+GLfloat vertices[] = {
+  -1.0f, -1.0f, 1.0f, .0f, .0f,
+  1.0f, -1.0f, .0f, 1.0f, .0f,
+  0.0f, 1.0f, .0f, .0f, 1.0f,
+};
 
 static void gen_buffers(STATE_M *state){
   // generate vertex buffer object
@@ -42,14 +47,13 @@ static void gen_buffers(STATE_M *state){
   
 };
 
-
 static void draw(STATE_M *state){
 
   // clear background
   glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
   // set background colour
-  glClearColor ( 0.0, 0.0, 0.0, 1.0 );
+  glClearColor ( 0.2, 0.2, 0.2, 1.0 );
 
   // open buffer
   glBindBuffer(GL_ARRAY_BUFFER, state->vbo);
@@ -58,18 +62,26 @@ static void draw(STATE_M *state){
   glUseProgram(state->shaderProgram);
 
   // pointer to vertex shader object
-  glVertexAttribPointer(state->posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
-  // make active
-  glEnableVertexAttribArray(state->posAttrib);
+  state->posAttrib = glGetAttribLocation(state->shaderProgram, "vPosition");
+  /* glVertexAttribPointer(state->posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0); */
+  /* glEnableVertexAttribArray(state->posAttrib);  // make active */
 
+  glVertexAttribPointer(state->posAttrib, 2, GL_FLOAT, GL_FALSE,
+  			5*sizeof(float), 0);
+  glEnableVertexAttribArray(state->posAttrib);  // make active
+
+  state->color = glGetAttribLocation(state->shaderProgram, "vColour");
+  glVertexAttribPointer(state->color, 3, GL_FLOAT, GL_FALSE,
+  			5*sizeof(float), (void*)(2*sizeof(float)));
+  glEnableVertexAttribArray(state->color);
+  
   // draw it
   glDrawArrays (GL_TRIANGLES, 0, 3);
 
   // update screen
   eglSwapBuffers(state->display, state->surface);
 }
-
 
 int main()
 {
@@ -78,14 +90,23 @@ int main()
   load_fragment_shader(state, "shaders/nothing.fs.c");
   load_vertex_shader(state, "shaders/nothing.vs.c");
   link_shaders(state);
-  get_shader_variables(state);
-  gen_buffers(state);
+  /* gen_buffers(state); */
+
+  // generate vertex buffer object
+  glGenBuffers(1, &state->vbo);
+  check();
+  // upload to gfx card
+  glBindBuffer(GL_ARRAY_BUFFER, state->vbo);
+  check();
+  // write vertices into vertex buffer object
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+  check();
   
-  /* showprogramlog(state->shaderProgram); */
+  showprogramlog(state->shaderProgram);
   
   while(1){
     draw(state);
-  }
+  };
   
   return 0;
 }
